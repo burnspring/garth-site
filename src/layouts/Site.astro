@@ -1,0 +1,68 @@
+---
+/**
+ * The frame every page shares: the head, the header and the footer. The
+ * addresses more than one page links to are in ../links.
+ */
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
+import "../styles/site.css";
+import { CONTACT, DOCS, SANDBOX_MAILTO, TOFT } from "../links";
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-row">
+        <a class="brand" href="/" aria-label="Garth home">
+          <img src="/favicon.svg" alt="" width="22" height="22" />
+          <span>Garth</span>
+        </a>
+        <nav class="header-nav">
+          <a href={DOCS}>Docs</a>
+          <a href="/pricing/">Pricing</a>
+          <a href="/#tour" class="hide-sm">Tour</a>
+          <a href="/#sandbox" class="hide-sm">Security</a>
+          <a href="/contact/" class="hide-sm">Contact</a>
+          <a class="button primary sm" href={SANDBOX_MAILTO}>Request a sandbox</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-row">
+        <span class="muted small">Garth is made and owned by Burnspring</span>
+        <nav class="footer-nav small">
+          <a href={DOCS}>Docs</a>
+          <a href="/pricing/">Pricing</a>
+          <a href="/contact/">Contact</a>
+          <a href={TOFT}>Toft</a>
+          <a href={`mailto:${CONTACT}`}>{CONTACT}</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

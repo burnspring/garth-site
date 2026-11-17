@@ -1,0 +1,92 @@
+---
+/**
+ * Contact: who is behind Garth, the one address to write to, and what to put
+ * in a message so it can be answered in one reply.
+ */
+import Site from "../layouts/Site.astro";
+import Icon from "../components/Icon.astro";
+import { CONTACT, DOCS, SANDBOX_MAILTO, SECURITY } from "../links";
+
+const title = "Contact — Garth";
+const description = `Garth is made and owned by Burnspring. Questions go to ${CONTACT}.`;
+
+const mailto = (to: string, subject: string) => `mailto:${to}?subject=${encodeURIComponent(subject)}`;
+
+const topics = [
+  {
+    label: "A sandbox to try",
+    body: "Say who you are and roughly when you want it. We stand up a Garth for you and send its address.",
+    href: SANDBOX_MAILTO,
+  },
+  {
+    label: "A question about Garth",
+    body: "Whether it fits how your team works, how it runs on your cluster, or anything the docs don’t answer.",
+    href: mailto(CONTACT, "A question about Garth"),
+  },
+  {
+    label: "Something isn’t working",
+    body: "Say which version you run, what you did, and what happened instead. A log line helps.",
+    href: mailto(CONTACT, "Something isn’t working"),
+  },
+  {
+    label: "A security issue",
+    body: `Write to ${SECURITY} before you tell anyone else, and we’ll reply to say we have it.`,
+    href: mailto(SECURITY, "Security report"),
+  },
+];
+---
+
+<Site title={title} description={description}>
+  <section class="container hero">
+    <div class="hero-grid rise">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h1>Write to us.</h1>
+      </div>
+      <div class="hero-side">
+        <p class="lede">
+          Garth is made and owned by Burnspring. One address reaches us: <a href={`mailto:${CONTACT}`}>{CONTACT}</a>. A
+          person reads it and answers.
+        </p>
+        <div class="actions">
+          <a class="button primary lg" href={`mailto:${CONTACT}`}>Email {CONTACT} <Icon name="arrow-right" /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container band-grid">
+      <div class="band-head">
+        <p class="num">01</p>
+        <h2>What to write about</h2>
+        <p>Each link opens a message with the subject filled in.</p>
+      </div>
+      <div class="band-body">
+        <ul class="rows spaced">
+          {
+            topics.map((t) => (
+              <li class="label-row">
+                <a class="row-label" href={t.href}>{t.label}</a>
+                <p class="muted small">{t.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container close">
+      <div>
+        <h2 class="display">Or look first.</h2>
+        <p class="lede">The docs cover working with the agent and running Garth yourself.</p>
+      </div>
+      <div class="actions">
+        <a class="button primary lg" href={DOCS}>Read the docs <Icon name="arrow-right" /></a>
+        <a class="button outline lg" href="/#tour">Watch the tour</a>
+      </div>
+    </div>
+  </section>
+</Site>

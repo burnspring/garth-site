@@ -1,0 +1,39 @@
+---
+/** Pricing: Garth is free, and the page says only that. */
+import Site from "../layouts/Site.astro";
+import Icon from "../components/Icon.astro";
+import { DOCS, SANDBOX_MAILTO } from "../links";
+
+const title = "Pricing — Garth";
+const description = "Garth is free.";
+---
+
+<Site title={title} description={description}>
+  <section class="container hero">
+    <div class="hero-grid rise">
+      <div>
+        <p class="eyebrow">Pricing</p>
+        <h1>Garth is free.</h1>
+      </div>
+      <div class="hero-side">
+        <p class="lede">
+          Run it on your own cluster and use every feature. There are no tiers and nothing to pay us. The cluster and
+          the models are yours, and so are their bills.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container close">
+      <div>
+        <h2 class="display">Try it first.</h2>
+        <p class="lede">Ask for a sandbox: a Garth we stand up for you, and take down when you are done.</p>
+      </div>
+      <div class="actions">
+        <a class="button primary lg" href={SANDBOX_MAILTO}>Request a sandbox <Icon name="arrow-right" /></a>
+        <a class="button outline lg" href={DOCS}>Read the docs</a>
+      </div>
+    </div>
+  </section>
+</Site>

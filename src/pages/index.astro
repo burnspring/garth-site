@@ -1,0 +1,460 @@
+---
+/**
+ * Garth's home page.
+ *
+ * The look is the product's own (which is Toft's), so someone going from here
+ * to a sandbox sees one thing. Every claim has to hold up against the
+ * product: each comes from Garth's README, its docs/design.md or a release
+ * note, and nothing is promised that those don't say.
+ *
+ * The tour plays public/video/garth-tour.mp4 over its poster,
+ * garth-tour.jpg. Captions (garth-tour.vtt) and a transcript
+ * (garth-tour-transcript.txt) are offered when those files are there too.
+ * Until the video is, the section says so rather than showing a dead player.
+ */
+import fs from "node:fs";
+import path from "node:path";
+import Site from "../layouts/Site.astro";
+import Icon from "../components/Icon.astro";
+import { DOCS, SANDBOX_MAILTO, TOFT } from "../links";
+
+const video = (f: string) => fs.existsSync(path.join(process.cwd(), "public", "video", f));
+const tour = {
+  film: video("garth-tour.mp4"),
+  poster: video("garth-tour.jpg"),
+  captions: video("garth-tour.vtt"),
+  transcript: video("garth-tour-transcript.txt"),
+};
+
+const session = [
+  {
+    label: "Yours alone",
+    body: "A session is one person, one project, one branch and one sandbox. Open the project again and you are back in it.",
+  },
+  {
+    label: "Watch and step in",
+    body: "The agent reads the code, edits files and runs commands. You follow along, with a terminal in the same sandbox, the changed files, and a preview of the app it is running.",
+  },
+  {
+    label: "Work is kept",
+    body: "Unsaved work is backed up after each of the agent’s turns and every few minutes. If the sandbox is lost, the session picks up from the last backup.",
+  },
+  {
+    label: "Pause and resume",
+    body: "An idle session pauses and gives its sandbox back. Resuming restores the work and the conversation on a fresh one.",
+  },
+  {
+    label: "Bring someone in",
+    body: "Invite a teammate on the project into your session, to watch it as it happens or to drive the agent with you.",
+  },
+];
+
+const projects = [
+  {
+    icon: "git-branch",
+    title: "Start empty, or import",
+    body: "Create a project in Garth, or import one from GitHub, GitLab or Azure DevOps. Access is its owner plus the people and groups it is shared with.",
+  },
+  {
+    icon: "git-merge",
+    title: "Merge here, or on your host",
+    body: "A project kept in Garth merges with one button. A project from a git host pushes your branch there as you, and its branch protection and reviews decide what reaches main.",
+  },
+  {
+    icon: "file-text",
+    title: "Instructions the team shares",
+    body: "AGENTS.md, memory and skills live in the repository, so every teammate’s agent follows the same ones. Memory is one fact per file, so two sessions never conflict over it.",
+  },
+  {
+    icon: "shield-check",
+    title: "Reviewed when they change",
+    body: "A merge that touches those instructions lists the files with their diffs, and goes ahead only once you confirm you have read them.",
+  },
+];
+
+const sandbox = [
+  {
+    icon: "key",
+    title: "No keys inside",
+    body: "The sandbox holds one secret: a token for its own session, which stops working when the session ends. No cloud credential, no git token, no deploy key.",
+  },
+  {
+    icon: "message-square",
+    title: "Models through a gateway",
+    body: "The agent calls models only through Garth, which checks the session is live, allows the models you configured, meters each call and signs it with its own role.",
+  },
+  {
+    icon: "git-branch",
+    title: "Git as the person",
+    body: "A clone, a dependency or a push to your host goes out through Garth, which adds the person’s own connection on the way. The sandbox never sees it.",
+  },
+  {
+    icon: "lock",
+    title: "Secrets go to one host",
+    body: "A project secret is declared with the host it is for. The sandbox holds a placeholder; Garth puts the value in on the way out, and only for that host.",
+  },
+  {
+    icon: "globe",
+    title: "One way out",
+    body: "Everything bound for the internet passes one proxy. By default it allows listed destinations only, and it refuses private addresses and instance metadata.",
+  },
+  {
+    icon: "box",
+    title: "Locked down",
+    body: "A session runs as an unprivileged user with every Linux capability dropped, in a pod of its own with a network policy around it.",
+  },
+];
+
+const admin = [
+  {
+    label: "Models",
+    body: "Offer each model to everyone or to chosen groups, and give a group its default. Amazon Bedrock models run on your own AWS account.",
+  },
+  {
+    label: "Spend",
+    body: "Every call is metered. See spend by project, person or model over the period you pick, set budgets per person, and export the days as CSV.",
+  },
+  {
+    label: "Sign-in",
+    body: "Single sign-on with your identity provider, and a local administrator password for the first sign-in and for the day single sign-on is broken.",
+  },
+  {
+    label: "Activity",
+    body: "Sessions, git, sign-ins, network and settings changes are recorded, with filters and a search over 90 days.",
+  },
+  {
+    label: "Sandboxes",
+    body: "Keep up to ten sandboxes warm so sessions start quickly. They carry Python, Node, Go and R, with a C toolchain and the usual tools.",
+  },
+];
+
+const runs = [
+  {
+    label: "Kubernetes",
+    body: "One k3s machine for a team trial, or a cluster such as Amazon EKS with sandboxes on nodes of their own. Sandboxes are built on the Kubernetes agent-sandbox project.",
+  },
+  {
+    label: "One binary",
+    body: "The control plane is a single Go program with a SQLite database. The web app is built in, so there is nothing else to serve.",
+  },
+  {
+    label: "The agent",
+    body: "Each sandbox runs Pi, at a pinned version, driven by Garth.",
+  },
+];
+
+const title = "Garth — a coding agent for your team, self-hosted";
+const description =
+  "Your team works with a coding agent in the browser. Projects are git repositories, and each session runs in its own sandbox on its own branch. Self-hosted, and free.";
+---
+
+<Site title={title} description={description}>
+  <section class="container hero">
+    <div class="hero-grid rise">
+      <div>
+        <p class="eyebrow">Self-hosted coding agent for teams <span class="free">Free</span></p>
+        <h1>
+          Your team and a coding agent, in the browser.
+          {" "}<span class="quiet">Each session in a sandbox of its own.</span>
+        </h1>
+      </div>
+      <div class="hero-side">
+        <p class="lede">
+          Projects are git repositories. Every session gets its own branch, and the work lands by merging. Garth runs
+          on your own cluster with your own models, and it is free.
+        </p>
+        <div class="actions">
+          <a class="button primary lg" href={SANDBOX_MAILTO}>
+            Request a sandbox <Icon name="arrow-right" />
+          </a>
+          <a class="button outline lg" href="#tour">Watch the tour</a>
+        </div>
+      </div>
+    </div>
+
+    <figure class="diagram card rise-late">
+      <figcaption class="sr-only">
+        Work in three steps: a project that is a git repository, a session on its own branch in its own sandbox, and a
+        merge.
+      </figcaption>
+      <div class="step">
+        <div class="step-head"><span class="num">01</span><span class="step-title">Project</span></div>
+        <p class="mono-line"><Icon name="git-branch" /><span>orders · main</span></p>
+        <p class="line"><Icon name="file-text" />AGENTS.md, memory and skills</p>
+        <p class="line"><Icon name="check" />Shared with people and groups</p>
+      </div>
+      <div class="step ruled">
+        <span class="arrow" aria-hidden="true"><Icon name="arrow-right" /></span>
+        <div class="step-head">
+          <span class="num">02</span><span class="step-title">Session</span>
+          <span class="badge ok"><span class="dot"></span>Running</span>
+        </div>
+        <p class="mono-line"><Icon name="git-branch" /><span>session/dana/4f2a91c07e</span></p>
+        <p class="line"><Icon name="box" />A sandbox nobody else shares</p>
+        <p class="line"><Icon name="terminal" />Agent, terminal, files, preview</p>
+      </div>
+      <div class="step ruled">
+        <span class="arrow" aria-hidden="true"><Icon name="arrow-right" /></span>
+        <div class="step-head"><span class="num">03</span><span class="step-title">Merge</span></div>
+        <p class="mono-line"><Icon name="git-merge" /><span>session/dana/… → main</span></p>
+        <p class="line"><Icon name="shield-check" />Instruction changes confirmed</p>
+        <p class="small muted">or pushed to your git host, as you</p>
+      </div>
+    </figure>
+  </section>
+
+  <section class="container tour" id="tour" aria-labelledby="tour-title">
+    <h2 id="tour-title">See it in two minutes</h2>
+    {
+      tour.film ? (
+        <>
+          <p class="muted">
+            Filmed on a running Garth. There is no public playground, so this is the quickest way to see it at work.
+          </p>
+          <video
+            controls
+            preload="metadata"
+            playsinline
+            poster={tour.poster ? "/video/garth-tour.jpg" : undefined}
+            width="1920"
+            height="1080"
+          >
+            <source src="/video/garth-tour.mp4" type="video/mp4" />
+            {tour.captions && <track kind="captions" src="/video/garth-tour.vtt" srclang="en" label="English" default />}
+          </video>
+          {tour.transcript && (
+            <p class="small">
+              <a class="link" href="/video/garth-tour-transcript.txt">Read the transcript</a>
+            </p>
+          )}
+        </>
+      ) : (
+        <>
+          <p class="muted">The tour is being filmed. Until it is here, the quickest way to see Garth is a sandbox.</p>
+          <div class="tour-empty">
+            <Icon name="play" />
+            <p>The video will play here.</p>
+            <a class="link" href={SANDBOX_MAILTO}>Request a sandbox <Icon name="arrow-right" /></a>
+          </div>
+        </>
+      )
+    }
+  </section>
+
+  <section class="band">
+    <div class="container band-grid">
+      <div class="band-head">
+        <p class="num">01</p>
+        <h2>A session</h2>
+        <p>You open a project and say what you want. The agent works in a sandbox, and you decide what to keep.</p>
+      </div>
+      <div class="band-body">
+        <ul class="rows">
+          {
+            session.map((r) => (
+              <li class="label-row">
+                <span class="row-label">{r.label}</span>
+                <p class="muted small">{r.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container band-grid">
+      <div class="band-head">
+        <p class="num">02</p>
+        <h2>Projects are git repositories</h2>
+        <p>
+          Garth is not a code host and has no pull requests of its own. Permissions on code stay with the host you
+          already use.
+        </p>
+      </div>
+      <div class="band-body">
+        <ul class="cells card">
+          {
+            projects.map((c) => (
+              <li>
+                <Icon name={c.icon} class="cell-icon" />
+                <h3>{c.title}</h3>
+                <p>{c.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="sandbox">
+    <div class="container band-grid">
+      <div class="band-head">
+        <p class="num">03</p>
+        <h2>The sandbox holds no credentials</h2>
+        <p>
+          An agent reads what it is given, and some of it will be written to mislead it. So nothing worth stealing is
+          put where the agent runs.
+        </p>
+      </div>
+      <div class="band-body">
+        <ul class="cells card">
+          {
+            sandbox.map((c) => (
+              <li>
+                <Icon name={c.icon} class="cell-icon" />
+                <h3>{c.title}</h3>
+                <p>{c.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container band-grid">
+      <div class="band-head">
+        <p class="num">04</p>
+        <h2>For whoever runs it</h2>
+        <p>What an administrator sets, and what they can see afterwards.</p>
+      </div>
+      <div class="band-body">
+        <ul class="rows">
+          {
+            admin.map((r) => (
+              <li class="label-row">
+                <span class="row-label">{r.label}</span>
+                <p class="muted small">{r.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container band-grid">
+      <div class="band-head">
+        <p class="num">05</p>
+        <h2>Built to deploy to Toft</h2>
+        <p>
+          Garth is the companion to <a class="inline" href={TOFT}>Toft</a>, the self-hosted app platform. What a
+          session builds can go live there.
+        </p>
+      </div>
+      <div class="band-body">
+        <pre class="cmd terminal"><code><span class="c"># in the conversation</span>
+<span class="you">you</span>    Deploy this to Toft and check it came up.
+<span class="c">agent</span>  toft deploy
+       It’s live at apps.example.com/orders/.</code></pre>
+        <ul class="rows spaced">
+          <li class="label-row">
+            <span class="row-label">As you</span>
+            <p class="muted small">
+              The agent deploys with your access, through Garth. The key is short-lived, is revoked when the session
+              ends, and never enters the sandbox.
+            </p>
+          </li>
+          <li class="label-row">
+            <span class="row-label">Starters</span>
+            <p class="muted small">
+              A new project can start as a working Toft app, in Python, Node, Go or R, that the agent knows how to
+              deploy.
+            </p>
+          </li>
+          <li class="label-row">
+            <span class="row-label">Both ways</span>
+            <p class="muted small">
+              A project knows the Toft apps it deploys to, and a Toft app opens the project its code lives in.
+            </p>
+          </li>
+          <li class="label-row">
+            <span class="row-label">Optional</span>
+            <p class="muted small">Toft is off until an administrator attaches an install. Garth works without it.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container band-grid">
+      <div class="band-head">
+        <p class="num">06</p>
+        <h2>Where it runs</h2>
+        <p>On Kubernetes that you run, with models on your own account. Your code stays on your infrastructure.</p>
+      </div>
+      <div class="band-body">
+        <ul class="rows">
+          {
+            runs.map((r) => (
+              <li class="label-row">
+                <span class="row-label">{r.label}</span>
+                <p class="muted small">{r.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="get-started">
+    <div class="container band-grid">
+      <div class="band-head">
+        <p class="num">07</p>
+        <h2>Get started</h2>
+        <p>Garth is free. Try it in a sandbox we set up for you, then run it on your own cluster.</p>
+      </div>
+      <div class="band-body">
+        <ul class="rows">
+          <li class="label-row">
+            <span class="row-label">A sandbox</span>
+            <div class="stack-what">
+              <p class="muted small">
+                There is no shared playground. Write to Burnspring, which makes and owns Garth, and we stand up a
+                Garth for you, send you its address, and take it down when you are done.
+              </p>
+              <p><a class="link" href={SANDBOX_MAILTO}>Request a sandbox by email <Icon name="arrow-right" /></a></p>
+            </div>
+          </li>
+          <li class="label-row">
+            <span class="row-label">The docs</span>
+            <div class="stack-what">
+              <p class="muted small">
+                A user guide for working with the agent, an admin guide for installing and running Garth, and the notes
+                for every release.
+              </p>
+              <p><a class="link" href={DOCS}>Read the docs <Icon name="arrow-right" /></a></p>
+            </div>
+          </li>
+          <li class="label-row">
+            <span class="row-label">The price</span>
+            <div class="stack-what">
+              <p class="muted small">Nothing. The cluster and the models are yours, and so are their bills.</p>
+              <p><a class="link" href="/pricing/">Pricing <Icon name="arrow-right" /></a></p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container close">
+      <div>
+        <h2 class="display">See it running.</h2>
+        <p class="lede">Ask for a sandbox and work a real project with the agent. It costs nothing.</p>
+      </div>
+      <div class="actions">
+        <a class="button primary lg" href={SANDBOX_MAILTO}>Request a sandbox <Icon name="arrow-right" /></a>
+        <a class="button outline lg" href={DOCS}>Read the docs</a>
+      </div>
+    </div>
+  </section>
+</Site>
