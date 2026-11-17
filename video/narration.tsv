@@ -1,0 +1,13 @@
+01	This is Garth. Here it is, in two minutes.
+02	Garth is where a team works with a coding agent, in the browser. Every project is a git repository, shared with the people who work on it.
+03	A project shows what is on main, and what the agent reads: the project's instructions, its memory and its skills, all kept in the repository.
+04	Start a session, and the agent gets its own sandbox, from a warm pool, on its own branch. It is ready in seconds.
+05	Ask for a change in plain words. The agent reads the code, edits files and runs commands, in this session's sandbox only.
+06	When it is done, the changes are listed beside the conversation, and the diff is one click away.
+07	Commit and push from the panel, then merge into main, and the work is there for the whole team.
+08	A live session can be shared with the project's people, to watch, or to drive it with you.
+09	Administrators see everyone, and give each person a budget, by the day and by the month.
+10	Every model call goes through Garth's gateway, so spending is counted as it happens, by person, project and model.
+11	Sandboxes are fenced by the cluster's network policy. They reach Garth, and through its proxy only the destinations you list. Never the cloud's metadata, your private network, the Kubernetes API or another sandbox.
+12	People sign in with your own identity provider, and you decide who can join.
+13	Garth is free. Find it at getgarth dot com. Garth is made and owned by Burnspring.

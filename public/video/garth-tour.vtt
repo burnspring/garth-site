@@ -1,0 +1,122 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:01.357
+This is Garth.
+
+2
+00:00:01.357 --> 00:00:03.010
+Here it is, in two minutes.
+
+3
+00:00:04.310 --> 00:00:08.001
+Garth is where a team works with a coding agent, in the browser.
+
+4
+00:00:08.001 --> 00:00:12.210
+Every project is a git repository, shared with the people who work on it.
+
+5
+00:00:13.511 --> 00:00:18.324
+A project shows what is on main, and what the agent reads: the project's
+
+6
+00:00:18.324 --> 00:00:22.870
+instructions, its memory and its skills, all kept in the repository.
+
+7
+00:00:24.171 --> 00:00:29.443
+Start a session, and the agent gets its own sandbox, from a warm pool, on its own
+
+8
+00:00:29.443 --> 00:00:29.898
+branch.
+
+9
+00:00:29.898 --> 00:00:31.395
+It is ready in seconds.
+
+10
+00:00:34.195 --> 00:00:36.379
+Ask for a change in plain words.
+
+11
+00:00:36.379 --> 00:00:41.973
+The agent reads the code, edits files and runs commands, in this session's sandbox
+
+12
+00:00:41.973 --> 00:00:42.314
+only.
+
+13
+00:00:46.614 --> 00:00:51.393
+When it is done, the changes are listed beside the conversation, and the diff is one
+
+14
+00:00:51.393 --> 00:00:52.019
+click away.
+
+15
+00:00:55.319 --> 00:01:00.153
+Commit and push from the panel, then merge into main, and the work is there for the
+
+16
+00:01:00.153 --> 00:01:00.793
+whole team.
+
+17
+00:01:03.593 --> 00:01:07.907
+A live session can be shared with the project's people, to watch, or to drive it
+
+18
+00:01:07.907 --> 00:01:08.392
+with you.
+
+19
+00:01:09.692 --> 00:01:14.535
+Administrators see everyone, and give each person a budget, by the day and by the
+
+20
+00:01:14.535 --> 00:01:14.894
+month.
+
+21
+00:01:16.194 --> 00:01:21.255
+Every model call goes through Garth's gateway, so spending is counted as it happens,
+
+22
+00:01:21.255 --> 00:01:23.002
+by person, project and model.
+
+23
+00:01:24.302 --> 00:01:27.800
+Sandboxes are fenced by the cluster's network policy.
+
+24
+00:01:27.800 --> 00:01:32.487
+They reach Garth, and through its proxy only the destinations you list.
+
+25
+00:01:32.487 --> 00:01:37.701
+Never the cloud's metadata, your private network, the Kubernetes API or another
+
+26
+00:01:37.701 --> 00:01:38.229
+sandbox.
+
+27
+00:01:39.529 --> 00:01:43.431
+People sign in with your own identity provider, and you decide who can join.
+
+28
+00:01:44.731 --> 00:01:45.821
+Garth is free.
+
+29
+00:01:45.821 --> 00:01:47.689
+Find it at getgarth.com.
+
+30
+00:01:47.689 --> 00:01:50.646
+Garth is made and owned by Burnspring.
+
