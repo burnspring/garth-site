@@ -2,13 +2,13 @@
 
 The home page's two-minute tour (`#tour`), built the way Toft's is: narration
 from AWS Polly, frames captured from a running Garth over the Chrome DevTools
-protocol, played back against the narration in real time and recorded, then
-encoded with ffmpeg.
+protocol, then rendered with the narration by ffmpeg from each frame's capture
+time (offline, so a busy machine can't stretch the take).
 
 ```
 narration.tsv   one line per scene: id <TAB> what is said
 capture.mjs     the scenes: what each one opens, points at, types and clicks
-record.mjs      plays web/frames against audio/ in Chrome and records it
+render.py       web/frames + audio/ into out/garth-tour.mp4: timing, fades, narration
 captions.py     the .vtt and the transcript, timed from the take
 build.sh        all of it, then scripts/sync-video.sh into public/video/
 ```
@@ -18,8 +18,11 @@ build.sh        all of it, then scripts/sync-video.sh into public/video/
 Never a real install: the tour shows people, projects and spend. It films a
 Garth started on its own fresh data directory, on loopback, with development
 sign-in on (so the demo people sign in by name), against a cluster that has
-the session image and warm pool — on the k3s box that means stopping the live
-Garth for the take, since only one control plane holds the pod listener:
+the session image and warm pool. On the k3s box only one control plane can hold
+the pod listener, so a take means stopping the live Garth: **trygarth.dev is
+down until it is started again**. Agree a time with whoever uses it first, and
+capture only — `video/build.sh record` (re-voicing, re-rendering) needs no
+Garth at all:
 
 ```bash
 cd ~/toft/garth
@@ -42,6 +45,8 @@ Then:
 ```bash
 GARTH_PROJECT=<orders-service id> video/build.sh
 video/build.sh scene 06      # one scene, for a look at web/frames
+video/build.sh voice 11      # re-voice one line; keep it no longer than before
+video/build.sh record        # render again from the frames on disk
 ```
 
 The filmed session is real: Claude Haiku 4.5 on Bedrock writes the change, so

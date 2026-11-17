@@ -89,19 +89,19 @@ Every model call goes through Garth's gateway, so spending is counted as it happ
 by person, project and model.
 
 23
-00:01:24.302 --> 00:01:27.800
+00:01:24.302 --> 00:01:28.036
 Sandboxes are fenced by the cluster's network policy.
 
 24
-00:01:27.800 --> 00:01:32.487
+00:01:28.036 --> 00:01:33.039
 They reach Garth, and through its proxy only the destinations you list.
 
 25
-00:01:32.487 --> 00:01:37.701
+00:01:33.039 --> 00:01:38.605
 Never the cloud's metadata, your private network, the Kubernetes API or another
 
 26
-00:01:37.701 --> 00:01:38.229
+00:01:38.605 --> 00:01:39.169
 sandbox.
 
 27
